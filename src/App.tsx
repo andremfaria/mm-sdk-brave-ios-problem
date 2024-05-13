@@ -3,12 +3,6 @@ import { useSDK } from "@metamask/sdk-react";
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 function App() {
   const { sdk, account } = useSDK();
-  const switchNetwork = async () => {
-    if (sdk) {
-      await sdk?.getProvider()?.request({method: "wallet_switchEthereumChain", params: [{chainId: "0x1"}]})
-    
-    }
-  }
   const connect = async () => {
     try {
       sdk?.terminate()
@@ -30,8 +24,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">Account: {account || "Connecting..."}</p>
-      <button onClick={switchNetwork}>Switch Network</button>
-      <button onClick={connect}>connect</button>
+      <button onClick={connect}>Connect</button>
     </>
   );
 }
