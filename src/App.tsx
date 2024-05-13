@@ -1,34 +1,28 @@
-import { useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { useSDK } from "@metamask/sdk-react";
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 function App() {
-  const { sdk, ready, account } = useSDK();
-
-  useEffect(() => {
-    if (ready && sdk) {
-      console.log("connecting...")
-      sdk
-        ?.connect()
-        .then((accounts) => {
-          console.log("connected.")
-          console.log(accounts);
-        })
-        .catch((error) => console.error(error));
+  const { sdk, account } = useSDK();
+  const switchNetwork = async () => {
+    if (sdk) {
+      await sdk?.getProvider()?.request({method: "wallet_switchEthereumChain", params: [{chainId: "0x1"}]})
+    
     }
-  }, [ready, sdk]);
-
+  }
+  const connect = async () => {
+    try {
+      sdk?.terminate()
+      await sdk?.connect()
+      // run some async logic...
+      await sleep(2000)
+      void sdk?.getProvider()?.request({method: "wallet_switchEthereumChain", params: [{chainId: "0x1"}]})
+    }catch(error) {
+      alert(JSON.stringify((error)))
+      console.error(error)
+    }
+  }
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
       <h1>Vite + React</h1>
       <div className="card">
         <p>
@@ -36,6 +30,8 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">Account: {account || "Connecting..."}</p>
+      <button onClick={switchNetwork}>Switch Network</button>
+      <button onClick={connect}>connect</button>
     </>
   );
 }

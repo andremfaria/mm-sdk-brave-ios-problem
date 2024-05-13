@@ -9,6 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <MetaMaskProvider 
     debug={true}
         sdkOptions={{
+          useDeeplink: true,
             dappMetadata: {
               name: "Demo React App",
               url: window.location.protocol + '//' + window.location.host,
