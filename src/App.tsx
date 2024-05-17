@@ -1,17 +1,14 @@
 import "./App.css";
 import { useSDK } from "@metamask/sdk-react";
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 function App() {
   const { sdk, account } = useSDK();
+
   const connect = async () => {
     try {
       sdk?.terminate()
       await sdk?.connect()
       // run some async logic...
-      await sleep(2000)
-      void sdk?.getProvider()?.request({method: "wallet_switchEthereumChain", params: [{chainId: "0x1"}]})
-    }catch(error) {
-      alert(JSON.stringify((error)))
+    }catch(error: unknown) {
       console.error(error)
     }
   }
