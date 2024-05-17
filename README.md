@@ -5,8 +5,7 @@ pnpm install
 pnpm dev --host
 ```
 
-1. Access `https://<your-local-ip>/5174` from the Chrome browser on an Android device.
-2. Hit the connect button. This will ask you to go to the wallet app. 
-3. Accept connection in the wallet app.
-4. It returns to the webapp.
-5. You need to manually go to the wallet app to accept the switchNetwork request. 
+1. Access https://<your-local-ip>:5174 from the Brave browser on your iPhone.
+2. Hit the "Connect" button.
+3. If nothing happens, proceed to the next step.
+4. Open Safari Web Inspector to check the logs for errors occurring in Brave.
